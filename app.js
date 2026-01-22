@@ -4,7 +4,7 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const PostRoute = require("./routes/blogRoutes.js");
 const signupRoute = require("./routes/signupRoutes.js");
-
+const loginRoute = require("./routes/loginRoutes.js");
 const app = express();
 
 
