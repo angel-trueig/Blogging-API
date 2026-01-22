@@ -1,0 +1,29 @@
+<%- include("boilerplate") %>
+
+    <div class="show-box">
+        <% for (p of post) { %>
+            <div class="container">
+                <a href="/posts/show/<%=p.id%>">
+                    <h1 class="post-title">
+                        <%= p.title %>
+                    </h1>
+                    <p class="post-content">
+                        <%= p.content %>
+                    </p>
+                    <p class="post-category">Category: <%= p.category %>
+                    </p>
+                </a>
+
+
+                <div class="buttons">
+                    <form action="/posts/<%= p.id %>/edit" method="get">
+                        <button class="edit-btn">Edit</button>
+                    </form>
+                    <form action="/posts/<%= p.id %>?_method=DELETE" method="post">
+                        <button class="delete-btn">Delete</button>
+                    </form>
+                </div>
+            </div>
+            </form>
+            <% } %>
+    </div>
