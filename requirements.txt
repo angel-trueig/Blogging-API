@@ -1,0 +1,4 @@
+<i class="fa-regular fa-heart"></i> ->light heart
+<i class="fa-solid fa-heart"></i> ->filled heart
+
+<i class="fa-regular fa-comment"></i> -> comment 
