@@ -1,8 +1,9 @@
 const express = require("express");
 const path = require("path");
 const ejsMate = require("ejs-mate");
-const PostRoute = require("./routes/blogRoutes.js");
 const methodOverride = require("method-override");
+const PostRoute = require("./routes/blogRoutes.js");
+const signupRoute = require("./routes/signupRoutes.js");
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(methodOverride('_method'));
 
 
 app.use("/posts", PostRoute);
+app.use("/signup", signupRoute);
+app.use("/login", loginRoute);
 
 app.get("/", (req, res) => {
     res.render("homePage");

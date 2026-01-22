@@ -9,7 +9,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "ejs-mate": "^4.0.0",
     "express": "^5.2.1",
@@ -20,5 +19,14 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angel-trueig/Blogging-API.git"
+  },
+  "bugs": {
+    "url": "https://github.com/angel-trueig/Blogging-API/issues"
+  },
+  "homepage": "https://github.com/angel-trueig/Blogging-API#readme",
+  "description": ""
 }

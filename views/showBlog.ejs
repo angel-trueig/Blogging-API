@@ -14,7 +14,7 @@
         <div class="action-buttons">
             <a href="#" class="action like-btn">
                 <i class="fa-regular fa-heart fa-2x"></i>
-                <span class="like-count">Like</span>
+                <span class="like-count">0</span>
             </a>
             <a href="#" class="action">
                 <i class="fa-regular fa-comment fa-2x"></i>
@@ -23,3 +23,15 @@
         </div>
 
     </div>
+
+    <script>
+        const likeBtn = document.querySelector(".like-btn")
+        const likeCount = document.querySelector(".like-count")
+        likeBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let count = parseInt(likeCount.textContent);
+
+            count++;
+            likeCount.textContent = count;
+        })
+    </script>
