@@ -5,9 +5,9 @@ module.exports.signupForm = (req, res) => {
 };
 
 module.exports.signupPost = (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
     const id = Date.now();
-    const user = new User(id, username, email, password);
+    const user = new User(id, username, email, password, role);
     user.save();
-    res.redirect("/posts/show");
+    res.redirect("/login");
 }

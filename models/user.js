@@ -3,11 +3,12 @@ const path = require("path");
 
 const dbPath = path.join(__dirname, "../db.json");
 class User {
-    constructor(id, username, email, password) {
+    constructor(id, username, email, password, role = "user") {
         this.id = id;
         this.name = username;
         this.email = email;
         this.password = password;
+        this.role = role;
 
     }
     async save() {
@@ -16,6 +17,8 @@ class User {
         parsedData.users.push(this);
         fs.writeFile(dbPath, JSON.stringify(parsedData));
     }
+
+
 };
 
 

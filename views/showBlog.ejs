@@ -21,8 +21,18 @@
                 <span>Comment</span>
             </a>
         </div>
-
     </div>
+
+    <div class="action-buttons">
+        <a href="/posts/edit/<%= post.id %>" class="action">
+            <button class="edit-btn">Edit</button>
+        </a>
+        <a href="/posts/delete/<%= post.id %>" class="action">
+            <button class="edit-btn">Delete</button>
+        </a>
+    </div>
+
+
 
     <script>
         const likeBtn = document.querySelector(".like-btn")
