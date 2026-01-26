@@ -2,25 +2,24 @@ const { readDB, writeDB } = require("../utils/db");
 const blog = require("../models/blog");
 const fs = require("fs/promises");
 
-module.exports.renderForm = (req, res) => {
-  res.render("createPost");
-
-}
-
 module.exports.storePost = async (req, res) => {
   let { title, content, category } = req.body;
   const db = await readDB();
-  const newPost = new blog(title, content, category);
+  const newPost = new blog(title, content, category, req.session.user.id);
   db.posts.push(newPost);
   writeDB(db);
-  res.redirect("/posts/show");
+  res.json({
+    message: "POST CREATED",
+    post: newPost
+  });
 };
 
 module.exports.show = async (req, res) => {
   try {
-    const data = await fs.readFile("./db.json", "utf-8");
-    const post = JSON.parse(data);
-    res.render("show", { post: post.posts });
+    const db = await readDB();
+    res.json({
+      posts: db.posts
+    })
   } catch (err) {
     console.error(err);
   }
@@ -30,19 +29,33 @@ module.exports.editPost = async (req, res) => {
   const { id } = req.params;
   const db = await readDB();
   const post = db.posts.find(p => p.id === Number(id));
-
-  res.render("editPost", { post });
+  if (post.authorId !== req.session.user.id) {
+    return res.status(403).json({
+      message: "YOU ARE NOT ALLOWED !!!"
+    });
+  }
+  res.json({
+    post
+  })
 };
 
 module.exports.updatePost = async (req, res) => {
   const { id } = req.params;
   const db = await readDB();
   const post = db.posts.find(p => p.id === Number(id));
+  if (post.authorId !== req.session.user.id) {
+    return res.status(403).json({
+      message: "YOU ARE NOT ALLOWED !!!"
+    });
+  }
   post.title = req.body.title;
   post.content = req.body.content;
   post.category = req.body.category;
   writeDB(db);
-  res.redirect("/posts/show");
+  res.json({
+    message: "POST UPDATED",
+    post
+  });
 }
 
 module.exports.deletePost = async (req, res) => {
@@ -50,11 +63,21 @@ module.exports.deletePost = async (req, res) => {
   const db = await readDB();
   const post = db.posts.find(p => p.id === Number(id));
   if (!post) {
-    res.send("post not found");
+    return res.status(404).json({
+      message: "POST NOT FOUND!!!"
+    });
+  }
+  if (post.authorId !== req.session.user.id) {
+    return res.status(403).json({
+      message: "YOU ARE NOT ALLOWED !!!"
+    });
   }
   db.posts = db.posts.filter(p => p.id != Number(id));
   await writeDB(db);
-  res.redirect("/posts/show");
+  res.json({
+    message: "POST DELETED",
+    post
+  });
 
 };
 
@@ -62,5 +85,12 @@ module.exports.showPost = async (req, res) => {
   const { id } = req.params;
   const db = await readDB();
   const post = db.posts.find(p => p.id === Number(id));
-  res.render("showBlog", { post });
+  if (!post) {
+    return res.status(404).json({
+      message: "POST NOT FOUND!!!"
+    });
+  }
+  res.json({
+    post
+  });
 }

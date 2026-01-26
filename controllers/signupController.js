@@ -1,13 +1,15 @@
 const User = require("../models/user");
 
-module.exports.signupForm = (req, res) => {
-    res.render("signup");
-};
 
-module.exports.signupPost = (req, res) => {
+module.exports.signupPost = async (req, res) => {
     const { username, email, password, role } = req.body;
-    const id = Date.now();
-    const user = new User(id, username, email, password, role);
-    user.save();
-    res.redirect("/login");
+    const user = new User(username, email, password, role);
+    await user.save();
+    res.json({
+        message: "user created",
+        user: {
+            id: user.id,
+            role: user.role
+        }
+    });
 }

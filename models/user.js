@@ -3,8 +3,8 @@ const path = require("path");
 
 const dbPath = path.join(__dirname, "../db.json");
 class User {
-    constructor(id, username, email, password, role = "user") {
-        this.id = id;
+    constructor(username, email, password, role = "user") {
+        this.id = Date.now();
         this.name = username;
         this.email = email;
         this.password = password;

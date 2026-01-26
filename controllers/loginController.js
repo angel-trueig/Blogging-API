@@ -3,9 +3,6 @@ const path = require("path");
 const dbPath = path.join(__dirname, "../db.json");
 
 
-module.exports.loginForm = (req, res) => {
-    res.render("login");
-};
 
 module.exports.loginPost = async (req, res) => {
     const { email, password } = req.body;
@@ -13,9 +10,24 @@ module.exports.loginPost = async (req, res) => {
     const users = JSON.parse(data).users;
 
     const user = users.find(u => u.email === email);
-    if (!user) return res.send("user not found");
+    if (!user) return res.status(404).json({
+        message: "user not found"
+    });
     if (user.password !== password) {
-        return res.send("wrong password");
+        return res.status(404).json({
+            message: "wrong password"
+        });
     }
-    res.redirect("/posts/show");
+
+    req.session.user = {
+        id: user.id,
+        role: user.role
+    }
+    res.json({
+        message: "login successful",
+        user: {
+            id: user.id,
+            role: user.role
+        }
+    });
 }

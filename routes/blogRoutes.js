@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const blog = require("../controllers/blogController.js");
+const { Authentication, Author } = require("../middleware/auth.js");
+
+
 
 router.route("/create")
-    .get(blog.renderForm)
-    .post(blog.storePost);
+    .post(Authentication, Author, blog.storePost);
 
 router.route("/show")
     .get(blog.show);
@@ -12,12 +14,10 @@ router.route("/show")
 router.route("/show/:id")
     .get(blog.showPost);
 
-router.route("/:id/edit")
-    .get(blog.editPost)
 
 router.route("/:id")
-    .put(blog.updatePost)
+    .put(Authentication, Author, blog.updatePost)
 
-router.delete("/:id", blog.deletePost);
+router.delete("/:id", Authentication, Author, blog.deletePost);
 
 module.exports = router;
