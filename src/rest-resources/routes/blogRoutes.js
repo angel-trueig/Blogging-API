@@ -20,4 +20,6 @@ router.route("/:id")
 
 router.delete("/:id", Authentication, Author, blog.deletePost);
 
+
+
 module.exports = router;
