@@ -20,6 +20,10 @@ router.route("/:id")
 
 router.delete("/:id", Authentication, Author, blog.deletePost);
 
+router.patch("/:id", Authentication, Author, blog.updateStatus);
+router.get("/category/:category", Authentication, blog.showPostByCategory);
 
 
+
+router.get("/search", blog.searchByTitle);
 module.exports = router;

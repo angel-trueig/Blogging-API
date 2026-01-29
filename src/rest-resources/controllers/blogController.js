@@ -81,3 +81,50 @@ module.exports.showPost = async (req, res, next) => {
     next(err);
   }
 }
+
+module.exports.updateStatus = async (req, res, next) => {
+  try {
+    const postId = req.params.id;
+    const authorId = req.session.user.id;
+
+    const blog = await blogService.updateStatus(postId, authorId);
+    if (!blog) {
+      return res.status(404).json({
+        message: "POST NOT FOUND!!!"
+      })
+    }
+    res.json({
+      message: `Post Marked as ${blog.status}`
+    })
+
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.showPostByCategory = async (req, res, next) => {
+  try {
+    const { category } = req.params;
+    const posts = await blogService.showPostByCategory(category);
+    res.json({
+      posts
+    })
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.searchByTitle = async (req, res, next) => {
+  try {
+    const { q } = req.query;
+    if (!q) {
+      return res.json({ message: "pls enter the query" })
+    };
+
+    const posts = await blogService.searchPost(q);
+    res.json({ posts })
+  }
+  catch (err) {
+    next(err);
+  }
+}

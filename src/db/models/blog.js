@@ -6,8 +6,22 @@ class Blog extends Model {
             id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
             title: { type: DataTypes.STRING, allowNull: false },
             content: { type: DataTypes.TEXT, allowNull: false },
-            category: { type: DataTypes.STRING, allowNull: false },
-            author_id: { type: DataTypes.INTEGER, allowNull: false }
+            category: {
+                type: DataTypes.ENUM(
+                    'general',
+                    'technology',
+                    'health',
+                    'finance',
+                    'sports',
+                    'entertainment',
+                    'lifestyle'
+                ),
+                allowNull: false,
+                defaultValue: 'general'
+            },
+
+            author_id: { type: DataTypes.INTEGER, allowNull: false },
+            status: { type: DataTypes.ENUM('active', 'inactive'), allowNull: false, defaultValue: 'active' }
         }, {
             sequelize,
             modelName: "Blog",
@@ -20,6 +34,6 @@ class Blog extends Model {
         Blog.belongsTo(models.User, { foreignKey: "author_id" });
         Blog.hasMany(models.Comment, { foreignKey: "blog_id" });
     }
-}
+};
 
 module.exports = Blog;
