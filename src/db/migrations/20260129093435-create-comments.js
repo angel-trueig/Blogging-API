@@ -1,11 +1,11 @@
 'use strict';
 
-module.exports = {
+export default {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('comments', {
       id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
       content: { type: Sequelize.TEXT, allowNull: false },
-      blog_id: {
+      post_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'posts', key: 'id' },

@@ -1,4 +1,4 @@
-const User = require("../db/models/user");
+import User from "../db/models/user.js";
 
 const signupUser = async (username, email, password, role) => {
 
@@ -11,6 +11,6 @@ const signupUser = async (username, email, password, role) => {
 
 }
 
-module.exports = {
+export default {
     signupUser
 }

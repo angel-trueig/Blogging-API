@@ -1,7 +1,5 @@
-const { Model, DataTypes } = require("sequelize");
-const bcrypt = require("bcrypt");
-
-
+import { Model, DataTypes } from "sequelize";
+import bcrypt from "bcrypt";
 
 class User extends Model {
     static initModel(sequelize) {
@@ -35,9 +33,9 @@ class User extends Model {
     }
 
     static associate(models) {
-        User.hasMany(models.Blog, { foreignKey: "author_id" });
+        User.hasMany(models.Post, { foreignKey: "author_id" });
         User.hasMany(models.Comment, { foreignKey: "user_id" });
     }
 }
 
-module.exports = User;
+export default User;

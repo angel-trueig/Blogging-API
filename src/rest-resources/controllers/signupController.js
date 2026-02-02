@@ -1,7 +1,7 @@
-const User = require("../../db/models/user");
-const signupService = require("../../handlers/signup.handler");
 
-module.exports.signupPost = async (req, res, next) => {
+import signupService from "../../handlers/signup.handler.js";
+
+export const signupPost = async (req, res, next) => {
     try {
         const { username, email, password, role } = req.body;
         const user = await signupService.signupUser(username, email, password, role);
@@ -17,3 +17,7 @@ module.exports.signupPost = async (req, res, next) => {
         next(err);
     };
 };
+
+export default {
+    signupPost
+}

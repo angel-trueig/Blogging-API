@@ -1,6 +1,8 @@
-const User = require("../db/models/user");
-const bcrypt = require("bcrypt");
+import bcrypt from 'bcrypt';
+import User from '../db/models/user.js';
+
 const loginUser = async (email, password) => {
+    // Database is already initialized in app.js
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
@@ -15,6 +17,6 @@ const loginUser = async (email, password) => {
     return user;
 };
 
-module.exports = {
+export default {
     loginUser
 };

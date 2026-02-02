@@ -1,13 +1,14 @@
+import express from 'express';
+const router = express.Router({ mergeParams: true });
 
-const router = require("express").Router({ mergeParams: true });
+import { authenticateToken } from '../middleware/jwtAuth.js';
+import { addComment, deleteCommentPost, editCommentPost, getPostComment, addReply } from "../controllers/commentController.js";
 
+router.post("/", authenticateToken, addComment);
+router.get("/", getPostComment);
+router.put("/:id", authenticateToken, editCommentPost);
+router.delete("/:id", authenticateToken, deleteCommentPost);
 
-const commentController = require("../controllers/commentController");
-const { Authentication, Author } = require("../middleware/auth.js");
+router.post("/:commentId/reply", authenticateToken, addReply);
 
-router.post("/", Authentication, commentController.addComment);
-router.get("/:blogId", commentController.getBlogComment);
-router.put("/:id", Authentication, commentController.editComment);
-router.delete("/:id", Authentication, commentController.deleteComment);
-
-module.exports = router;
+export default router;

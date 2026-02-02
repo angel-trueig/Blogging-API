@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+export default {
   async up(queryInterface, Sequelize) {
     // Convert the existing string column to ENUM
     await queryInterface.changeColumn('posts', 'category', {

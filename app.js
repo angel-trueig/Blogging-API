@@ -1,14 +1,18 @@
-const express = require("express");
-const path = require("path");
-const methodOverride = require("method-override");
-const session = require("express-session");
-const errorMiddleware = require("./src/rest-resources/middleware/error");
+import 'dotenv/config';
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+import methodOverride from "method-override";
+import errorMiddleware from "./src/rest-resources/middleware/errorHandler.js";
 
-const PostRoute = require("./src/rest-resources/routes/blogRoutes.js");
-const signupRoute = require("./src/rest-resources/routes/signupRoutes.js");
-const loginRoute = require("./src/rest-resources/routes/loginRoutes.js");
-const commentRoutes = require("./src/rest-resources/routes/commentRoutes.js");
+import PostRoute from "./src/rest-resources/routes/postRoutes.js";
+import signupRoute from "./src/rest-resources/routes/signupRoutes.js";
+import loginRoute from "./src/rest-resources/routes/loginRoutes.js";
+import commentRoutes from "./src/rest-resources/routes/commentRoutes.js";
+import cookieParser from 'cookie-parser';
 const app = express();
 
 app.use(express.json());
@@ -16,19 +20,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride('_method'));
-
-app.use(session({
-    secret: "blog-secret-key",
-    resave: false,
-    saveUninitialized: false
-}));
+app.use(cookieParser());
 
 
 
 app.use("/posts", PostRoute);
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
-app.use("/comments", commentRoutes);
 
 app.get("/", (req, res) => {
     res.send("homePage");
@@ -36,7 +34,14 @@ app.get("/", (req, res) => {
 
 app.use(errorMiddleware);
 
-app.listen(8080, () => {
-    console.log("server listening");
 
+
+import initDb from "./src/db/models/index.js";
+
+initDb().then(() => {
+    app.listen(process.env.PORT, () => {
+        console.log("server listening");
+    });
+}).catch((err) => {
+    console.log(err);
 });
