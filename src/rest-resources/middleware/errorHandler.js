@@ -1,6 +1,6 @@
 export default (err, req, res, next) => {
     console.error(err);
-    if (err.isOperational) {
+    if (err) {
         return res.status(err.statusCode).json({
             success: false,
             message: err.message

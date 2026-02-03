@@ -34,7 +34,7 @@ class Comment extends Model {
         Comment.belongsTo(Comment, {
             as: 'parent',
             foreignKey: 'parent_id'
-        })
+        });
     }
 }
 

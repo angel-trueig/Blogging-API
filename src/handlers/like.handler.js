@@ -3,7 +3,7 @@ import Post from "../db/models/post.js";
 
 
 const toggleLike = async (userId, postId) => {
-    const post = await Post.findByPk(postId);
+    const post = await Post.count({ where: { id: postId } });
     if (!post) throw new Error("POST_NOT_FOUND");
 
     const existingLike = await Like.findOne({

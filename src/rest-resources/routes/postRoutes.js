@@ -18,11 +18,12 @@ import { authenticateToken, authorizeRole } from '../middleware/jwtAuth.js';
 router.post(
     "/create",
     authenticateToken,
-    authorizeRole(['author', 'user']),
+    authorizeRole(['author']),
     storePost
 );
 
 router.get(
+
     "/show",
     showAll
 );
@@ -40,21 +41,21 @@ router.get(
 router.put(
     "/:slug",
     authenticateToken,
-    authorizeRole(['author', 'user']),
+    authorizeRole(['author']),
     updatePost
 );
 
 router.patch(
     "/:slug/status",
     authenticateToken,
-    authorizeRole(['author', 'user']),
+    authorizeRole(['author']),
     updateStatusPost
 );
 
 router.delete(
     "/:slug",
     authenticateToken,
-    authorizeRole(['author', 'user']),
+    authorizeRole(['author']),
     deletePosts
 );
 
@@ -71,7 +72,7 @@ router.post(
 );
 
 router.get(
-    "/:slug/count",
+    "/:id/count",
     likeController.getLikes
 );
 

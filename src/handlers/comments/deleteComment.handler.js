@@ -1,7 +1,7 @@
 import Comment from "../../db/models/comment.js";
 
 export const deleteComment = async (id, userId) => {
-    const comment = await Comment.findByPk(id);
+    const comment = await Comment.findOne({ where: { id } });
 
     if (!comment) {
         return null;

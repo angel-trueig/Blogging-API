@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 export const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
     const token =
         req.cookies?.access_token ||
         req.headers.authorization?.split(" ")[1];
@@ -19,6 +18,8 @@ export const authenticateToken = (req, res, next) => {
         next();
     });
 };
+
+
 
 export const authorizeRole = (role = []) => (req, res, next) => {
     if (role.length && !role.includes(req.user.role)) {

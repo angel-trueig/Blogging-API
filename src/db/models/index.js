@@ -28,15 +28,15 @@ const initDb = async () => {
     });
 
     await sequelize.authenticate();
-    console.log('✅ Database connected successfully.');
-    console.log('✅ Models initialized:', Object.keys(models));
+    console.log('Database connected successfully.');
+    console.log('Models initialized:', Object.keys(models));
 
     return {
       sequelize,
       ...models
     };
   } catch (error) {
-    console.error('❌ Database initialization failed:', error);
+    console.error(' Database initialization failed:', error);
     throw error;
   }
 };
