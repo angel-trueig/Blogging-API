@@ -1,8 +1,13 @@
 import bcrypt from 'bcrypt';
 import User from '../db/models/user.js';
 
+<<<<<<< HEAD:src/handlers/login.handler.js
 const loginUser = async (email, password) => {
 
+=======
+export const loginUser = async (email, password) => {
+    // Database is already initialized in app.js
+>>>>>>> feature/recent:src/handlers/auth.handler.js
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
@@ -17,6 +22,4 @@ const loginUser = async (email, password) => {
     return user;
 };
 
-export default {
-    loginUser
-};
+export default loginUser;

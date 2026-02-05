@@ -2,9 +2,11 @@ import Post from "../../db/models/post.js";
 import Comment from "../../db/models/comment.js";
 import sequelize from "../../config/database.config.js";
 import AppError from "../../errors/AppError.js";
+import logger from "../../libs/logger.js";
 
 export const createComment = async ({ content, postId, userId }) => {
     const transaction = await sequelize.transaction();
+    logger.info("creating comment");
     try {
         const post = await Post.count({ where: { id: postId }, transaction });
         if (!post) throw new AppError("Post Not Found", 404);
@@ -12,6 +14,8 @@ export const createComment = async ({ content, postId, userId }) => {
         const comment = await Comment.create({
             content, post_id: postId, user_id: userId
         }, { transaction });
+
+        logger.info("comment created successfully");
 
         await Post.increment('comments_count', {
             by: 1,
@@ -23,6 +27,7 @@ export const createComment = async ({ content, postId, userId }) => {
         return comment;
     } catch (err) {
         await transaction.rollback();
+        logger.error("error : ", err.message);
         throw err;
     }
 };

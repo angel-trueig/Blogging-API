@@ -16,7 +16,7 @@ export const editPost = async (slug, userId, data) => {
         throw new AppError("You are not allowed to edit this post", 403);
     }
 
-    return await post.update(data)
+    return await post.update(data) // for updating slug , use afterUpdate hook
 
 }
 

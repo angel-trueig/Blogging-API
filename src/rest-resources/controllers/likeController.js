@@ -1,4 +1,5 @@
 import likeService from "../../handlers/like.handler.js";
+import { getIo } from "../../socket-resources/socketServer.js";
 
 
 export const toggleLike = async (req, res, next) => {
@@ -8,6 +9,22 @@ export const toggleLike = async (req, res, next) => {
 
         const result = await likeService.toggleLike(userId, postId);
 
+        //socket
+        const io = getIo();
+        //global -> willll work everyt timeee
+        io.emit("postLikeUpdated", {
+            postId, userId, action: result.action, totalLikes: result.totalLike
+        });
+
+        //will work only if post belongs to author
+        if (result.action === "liked") {
+            io.to(`user_${result.postAuthorId}`).emit("notification", {
+                type: "LIKE",
+                senderId: userId,
+                postId,
+                message: "Someone liked your post"
+            })
+        }
         res.json({
             message: result.message
         })

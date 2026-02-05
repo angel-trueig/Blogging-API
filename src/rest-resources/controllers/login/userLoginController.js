@@ -1,19 +1,17 @@
-import loginService from "../../handlers/login.handler.js";
+import { loginUser } from "../../../handlers/auth.handler.js";
 import jwt from 'jsonwebtoken';
 
-export const loginPost = async (req, res, next) => {
+export const userLoginPost = async (req, res, next) => {
     try {
         console.log("LOGIN BODY:", req.body);
         const { email, password } = req.body;
 
-        const user = await loginService.loginUser(email, password);
-
-        if (!user) {
-            return res.status(404).json({
-                message: "USER NOT FOUND"
+        const user = await loginUser(email, password);
+        if (!user || user.role !== "user") {
+            return res.status(401).json({
+                message: "Invalid user credentials",
             });
-        }
-
+        };
         const token = jwt.sign({ id: user.id, role: user.role },
             process.env.JWT_SECRET,
             {
@@ -42,6 +40,4 @@ export const loginPost = async (req, res, next) => {
     }
 };
 
-export default {
-    loginPost
-}
+export default userLoginPost;
