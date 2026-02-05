@@ -48,6 +48,11 @@ class Post extends Model {
             comments_count: {
                 type: DataTypes.INTEGER,
                 defaultValue: 0
+            },
+            view_count: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 0
             }
         }, {
             sequelize,

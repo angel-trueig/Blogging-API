@@ -9,7 +9,9 @@ import {
     showSinglePost,
     updateStatusPost,
     showByCategory,
-    searchByTitle
+    searchByTitle,
+    getRecentPosts,
+    getTrendingPosts
 } from "../controllers/postController.js";
 import likeController from "../controllers/likeController.js";
 import { authenticateToken, authorizeRole } from '../middleware/jwtAuth.js';
@@ -18,7 +20,7 @@ import { authenticateToken, authorizeRole } from '../middleware/jwtAuth.js';
 router.post(
     "/create",
     authenticateToken,
-    authorizeRole(['author', 'user']),
+    authorizeRole(['author']),
     storePost
 );
 
@@ -38,23 +40,23 @@ router.get(
 
 
 router.put(
-    "/:slug",
+    "/:slug",//id
     authenticateToken,
-    authorizeRole(['author', 'user']),
+    authorizeRole(['author']),
     updatePost
 );
 
 router.patch(
     "/:slug/status",
     authenticateToken,
-    authorizeRole(['author', 'user']),
+    authorizeRole(['author']),
     updateStatusPost
 );
 
 router.delete(
     "/:slug",
     authenticateToken,
-    authorizeRole(['author', 'user']),
+    authorizeRole(['author']),
     deletePosts
 );
 
@@ -74,6 +76,9 @@ router.get(
     "/:slug/count",
     likeController.getLikes
 );
+
+router.get('/stats/recent', authenticateToken, getRecentPosts);
+router.get('/stats/trending', authenticateToken, getTrendingPosts);
 
 router.use("/:postId/comments", commentRoutes);
 

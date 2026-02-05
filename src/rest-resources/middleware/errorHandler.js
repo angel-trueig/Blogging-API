@@ -1,5 +1,7 @@
+import logger from "../../libs/logger.js";
+
 export default (err, req, res, next) => {
-    console.error(err);
+    logger.error(err);
     if (err.isOperational) {
         return res.status(err.statusCode).json({
             success: false,

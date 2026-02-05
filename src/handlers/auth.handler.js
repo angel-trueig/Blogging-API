@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import User from '../db/models/user.js';
 
-const loginUser = async (email, password) => {
+export const loginUser = async (email, password) => {
     // Database is already initialized in app.js
     const user = await User.findOne({ where: { email } });
 
@@ -17,6 +17,4 @@ const loginUser = async (email, password) => {
     return user;
 };
 
-export default {
-    loginUser
-};
+export default loginUser;

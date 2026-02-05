@@ -7,6 +7,8 @@ import { showPost } from "../../handlers/posts/showPost.handler.js";
 import { updateStatus } from "../../handlers/posts/updateStatus.handler.js";
 import { showPostByCategory } from "../../handlers/posts/showPostByCategory.handler.js";
 import { searchPost } from "../../handlers/posts/searchPost.handler.js";
+import { getRecentPostsHandler } from "../../handlers/posts/filters/recentPosts.handler.js";
+import { getTrendingPostsHandler } from "../../handlers/posts/filters/trendingPost.handler.js";
 
 
 export const storePost = async (req, res, next) => {
@@ -130,7 +132,25 @@ export const searchByTitle = async (req, res, next) => {
   catch (err) {
     next(err);
   }
-}
+};
+
+export const getRecentPosts = async (req, res, next) => {
+  try {
+    const result = await getRecentPostsHandler(req);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getTrendingPosts = async (req, res, next) => {
+  try {
+    const result = await getTrendingPostsHandler(req);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
+};
 
 export default {
   storePost,
@@ -140,5 +160,7 @@ export default {
   showSinglePost,
   updateStatusPost,
   showByCategory,
-  searchByTitle
+  searchByTitle,
+  getRecentPosts,
+  getTrendingPosts
 }

@@ -1,5 +1,4 @@
 import { Model, DataTypes } from "sequelize";
-import Post from "./post.js";
 
 class Comment extends Model {
     static initModel(sequelize) {
@@ -11,9 +10,11 @@ class Comment extends Model {
             parent_id: { type: DataTypes.INTEGER, allowNull: true },
             is_deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
             deleted_at: { type: DataTypes.DATE, allowNull: true },
+            comment_count: { type: DataTypes.INTEGER, defaultValue: 0 }
+
         }, {
             sequelize,
-            modelName: "comment",
+            modelName: "Comment",
             tableName: "comments",
             underscored: true,
             timestamps: true

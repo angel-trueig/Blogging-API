@@ -35,6 +35,8 @@ class User extends Model {
     static associate(models) {
         User.hasMany(models.Post, { foreignKey: "author_id" });
         User.hasMany(models.Comment, { foreignKey: "user_id" });
+        User.belongsToMany(models.User, { through: models.Subscription, foreignKey: "subscriber_id", otherKey: "author_id", as: "SubscribedAuthors" });
+        User.belongsToMany(models.User, { through: models.Subscription, foreignKey: "author_id", otherKey: "subscriber_id", as: "Subscribers" });
     }
 }
 

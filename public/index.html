@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Socket Test</title>
+</head>
+
+<body>
+    <button class="btn">Join Post</button>
+
+    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+
+
+    <script>
+        const CURRENT_USER_ID = 17;
+
+        const btn = document.querySelector(".btn");
+
+        const socket = io("http://localhost:8080");
+        const postId = 123;
+
+
+        socket.on("connect", () => {
+            console.log("connected to socket:", socket.id);
+            socket.emit("joinUserRoom", CURRENT_USER_ID);
+
+        });
+
+        socket.on("postLikeUpdated", (data) => {
+            console.log("post like updated", data);
+        });
+
+
+        socket.on("notification", (data) => {
+            console.log("notification", data);
+        })
+    </script>
+
+</body>
+
+</html>
